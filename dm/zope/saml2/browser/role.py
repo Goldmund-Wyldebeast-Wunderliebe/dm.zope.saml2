@@ -10,6 +10,8 @@ from dm.saml2.binding.soap import http_request as soap_request
 from dm.saml2.binding.httpredirect import decode as redirect_decode
 from dm.saml2.binding.httppost import decode as post_decode
 from dm.saml2.pyxb.protocol import CreateFromDocument
+from plone.protect.interfaces import IDisableCSRFProtection
+from zope.interface import alsoProvides
 
 from dm.zope.saml2.role import logging_enabled
 
@@ -43,6 +45,7 @@ class RoleView(BrowserView):
     return self._process(msg, binding="redirect", relay_state=relay_state)
 
   def post(self):
+    alsoProvides(self.request, IDisableCSRFProtection)
     msg, relay_state = post_decode(self.request.form)
     return self._process(msg, binding="post", relay_state=relay_state)
 
