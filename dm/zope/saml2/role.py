@@ -49,8 +49,8 @@ class Role(RelayStateManager):
       )
     # check whether this is a success or failure
     if rsp.Status.StatusCode.Value != rsp.PREFIX + "Success":
-      # this is a failure
-      logger.error("failed SAML2 request: %s" % rsp.toxml())
+      # Do not log an error when the requests has failed
+      # logger.error("failed SAML2 request: %s" % rsp.toxml())
       if fail is None: raise SystemError("unsolicited SAML failure response")
       return self.REQUEST.response.redirect(fail)
     # success response
