@@ -1,0 +1,2 @@
+graft dm/zope/saml2
+include *.cfg *.rst *.in
